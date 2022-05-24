@@ -1,0 +1,22 @@
+#!/bin/sh
+
+[ $# -lt 1 ] && {
+	printf '%s\n' "usage: $0 <timescaleval>" >&2
+	exit 1
+}
+
+awk -v sc=$1 'BEGIN {
+	a = 1 / sc
+} /^#/ {
+	next
+} /^$/ {
+	if (!n)
+		a = sc
+	else if (n == 1)
+		a = sc * sc
+	n++
+	next
+} {
+	$NF = ($NF+0) * a
+	print
+}'
