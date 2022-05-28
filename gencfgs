@@ -1,0 +1,8 @@
+#!/bin/sh
+
+for s in 0.50 0.75 1.00 1.25 1.50
+do
+	pref=tunes_$s
+	./tunetimescale $s < tunes_def.cfg > ${pref}_gen.cfg
+	printf 'add_vote "speed %s" "exec %s; exec %s"\n' $s ${pref}_gen.cfg $pref.cfg
+done
